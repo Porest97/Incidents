@@ -94,8 +94,18 @@ namespace Incidents.Models.DataModels
         [Display(Name = "Resolution")]
         public string Resolution { get; set; }
 
+        // PO (Purchase Order)
+
+        [Display(Name = "PO #")]
+        public int? PurchaseOrderId { get; set; }
+        [Display(Name = "PO #")]
+        [ForeignKey("PurchaseOrderId")]
+        public PurchaseOrder PurchaseOrder { get; set; }
+
         //Reporting to accounting
         //When Status = Resolved then build an IncidentReport !
+
+
 
 
     }

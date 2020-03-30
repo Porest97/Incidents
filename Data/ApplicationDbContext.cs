@@ -30,6 +30,7 @@ namespace Incidents.Data
         public DbSet<Incidents.Models.SettingsModels.IncidentStatus> IncidentStatus { get; set; }
         public DbSet<Incidents.Models.SettingsModels.IncidentType> IncidentType { get; set; }
         public DbSet<Incidents.Models.DataModels.Incident> Incident { get; set; }
+        public DbSet<Incidents.Models.DataModels.PurchaseOrder> PurchaseOrder { get; set; }
 
     }
 }

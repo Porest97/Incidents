@@ -14,15 +14,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IncidentPriority" class="control-label"></label>
-                <select asp-for="IncidentPriorityId" class ="form-control" asp-items="ViewBag.IncidentPriorityId"></select>
+                <select asp-for="IncidentPriorityId" class="form-control" asp-items="ViewBag.IncidentPriorityId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IncidentStatus" class="control-label"></label>
-                <select asp-for="IncidentStatusId" class ="form-control" asp-items="ViewBag.IncidentStatusId"></select>
+                <select asp-for="IncidentStatusId" class="form-control" asp-items="ViewBag.IncidentStatusId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IncidentType" class="control-label"></label>
-                <select asp-for="IncidentTypeId" class ="form-control" asp-items="ViewBag.IncidentTypeId"></select>
+                <select asp-for="IncidentTypeId" class="form-control" asp-items="ViewBag.IncidentTypeId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="IncidentNumber" class="control-label"></label>
@@ -36,11 +36,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Creator" class="control-label"></label>
-                <select asp-for="PersonId" class ="form-control" asp-items="ViewBag.PersonId"></select>
+                <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchaseOrder" class="control-label"></label>
+                <select asp-for="PurchaseOrderId" class="form-control" asp-items="ViewBag.PurchaseOrderId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Site" class="control-label"></label>
-                <select asp-for="SiteId" class ="form-control" asp-items="ViewBag.SiteId"></select>
+                <select asp-for="SiteId" class="form-control" asp-items="ViewBag.SiteId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Received" class="control-label"></label>
@@ -49,7 +53,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Receiver" class="control-label"></label>
-                <select asp-for="PersonId1" class ="form-control" asp-items="ViewBag.PersonId1"></select>
+                <select asp-for="PersonId1" class="form-control" asp-items="ViewBag.PersonId1"></select>
             </div>
             <div class="form-group">
                 <label asp-for="FEScheduled" class="control-label"></label>
@@ -58,7 +62,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FEAssigned" class="control-label"></label>
-                <select asp-for="PersonId2" class ="form-control" asp-items="ViewBag.PersonId2"></select>
+                <select asp-for="PersonId2" class="form-control" asp-items="ViewBag.PersonId2"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>

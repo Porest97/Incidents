@@ -30,6 +30,7 @@ namespace Incidents.Controllers
                 .Include(i => i.IncidentStatus)
                 .Include(i => i.IncidentType)
                 .Include(i => i.Receiver)
+                .Include(i => i.PurchaseOrder)
                 .Include(i => i.Site);
             return View(await applicationDbContext.ToListAsync());
         }
@@ -47,11 +48,68 @@ namespace Incidents.Controllers
                 .Include(i => i.IncidentType)
                 .Include(i => i.Receiver)
                 .Include(i => i.Site)
+                .Include(i => i.PurchaseOrder)
                 .ToList()
             };
             return View(incidentsViewModel);
         }
 
+        // GET: ListIncidentsP1
+        public IActionResult ListIncidentsP1()
+        {
+            var incidentsViewModel = new IncidentsViewModel()
+            {
+                Incidents = _context.Incident
+                .Include(i => i.Creator)
+                .Include(i => i.FEAssigned)
+                .Include(i => i.IncidentPriority)
+                .Include(i => i.IncidentStatus)
+                .Include(i => i.IncidentType)
+                .Include(i => i.Receiver)
+                .Include(i => i.PurchaseOrder)
+                .Include(i => i.Site).Where(i => i.IncidentPriorityId == 1 && i.IncidentStatusId < 3)
+                .ToList()
+            };
+            return View(incidentsViewModel);
+        }
+
+        // GET: ListIncidentsP2
+        public IActionResult ListIncidentsP2()
+        {
+            var incidentsViewModel = new IncidentsViewModel()
+            {
+                Incidents = _context.Incident
+                .Include(i => i.Creator)
+                .Include(i => i.FEAssigned)
+                .Include(i => i.IncidentPriority)
+                .Include(i => i.IncidentStatus)
+                .Include(i => i.IncidentType)
+                .Include(i => i.Receiver)
+                .Include(i => i.PurchaseOrder)
+                .Include(i => i.Site).Where(i => i.IncidentPriorityId == 2).Where(i => i.IncidentStatusId < 2)
+                .ToList()
+            };
+            return View(incidentsViewModel);
+        }
+
+        // GET: ListIncidentsP2
+        public IActionResult ListIncidentsP3()
+        {
+            var incidentsViewModel = new IncidentsViewModel()
+            {
+                Incidents = _context.Incident
+                .Include(i => i.Creator)
+                .Include(i => i.FEAssigned)
+                .Include(i => i.IncidentPriority)
+                .Include(i => i.IncidentStatus)
+                .Include(i => i.IncidentType)
+                .Include(i => i.Receiver)
+                .Include(i => i.PurchaseOrder)
+                .Include(i => i.Site).Where(i => i.IncidentPriorityId == 3).Where(i => i.IncidentStatusId < 2)
+                .ToList()
+            };
+            return View(incidentsViewModel);
+        }
 
         // GET: Incidents/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -68,6 +126,7 @@ namespace Incidents.Controllers
                 .Include(i => i.IncidentStatus)
                 .Include(i => i.IncidentType)
                 .Include(i => i.Receiver)
+                .Include(i => i.PurchaseOrder)
                 .Include(i => i.Site)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (incident == null)
@@ -86,7 +145,8 @@ namespace Incidents.Controllers
             ViewData["IncidentPriorityId"] = new SelectList(_context.IncidentPriority, "Id", "IncidentPriorityName");
             ViewData["IncidentStatusId"] = new SelectList(_context.IncidentStatus, "Id", "IncidentStatusName");
             ViewData["IncidentTypeId"] = new SelectList(_context.IncidentType, "Id", "IncidentTypeName");
-            ViewData["PersonId1"] = new SelectList(_context.Person, "Id", "FullName");
+            ViewData["PurchaseOrderId"] = new SelectList(_context.PurchaseOrder, "Id", "PONumber");
+            ViewData["PersonId1"] = new SelectList(_context.Person, "Id", "FullName");            
             ViewData["SiteId"] = new SelectList(_context.Site, "Id", "NoSite");
             return View();
         }
@@ -96,7 +156,7 @@ namespace Incidents.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IncidentPriorityId,IncidentStatusId,IncidentTypeId,IncidentNumber,Created,PersonId,SiteId,Received,PersonId1,FEScheduled,PersonId2,Description,FEEntersSite,FEEExitsSite,Logg,IssueResolved,Resolution")] Incident incident)
+        public async Task<IActionResult> Create([Bind("Id,IncidentPriorityId,IncidentStatusId,IncidentTypeId,IncidentNumber,Created,PersonId,PurchaseOrderId,SiteId,Received,PersonId1,FEScheduled,PersonId2,Description,FEEntersSite,FEEExitsSite,Logg,IssueResolved,Resolution")] Incident incident)
         {
             if (ModelState.IsValid)
             {
@@ -110,6 +170,7 @@ namespace Incidents.Controllers
             ViewData["IncidentStatusId"] = new SelectList(_context.IncidentStatus, "Id", "IncidentStatusName", incident.IncidentStatusId);
             ViewData["IncidentTypeId"] = new SelectList(_context.IncidentType, "Id", "IncidentTypeName", incident.IncidentTypeId);
             ViewData["PersonId1"] = new SelectList(_context.Person, "Id", "FullName", incident.PersonId1);
+            ViewData["PurchaseOrderId"] = new SelectList(_context.PurchaseOrder, "Id", "PONumber", incident.PurchaseOrderId);
             ViewData["SiteId"] = new SelectList(_context.Site, "Id", "NoSite", incident.SiteId);
             return View(incident);
         }
@@ -133,6 +194,7 @@ namespace Incidents.Controllers
             ViewData["IncidentStatusId"] = new SelectList(_context.IncidentStatus, "Id", "IncidentStatusName", incident.IncidentStatusId);
             ViewData["IncidentTypeId"] = new SelectList(_context.IncidentType, "Id", "IncidentTypeName", incident.IncidentTypeId);
             ViewData["PersonId1"] = new SelectList(_context.Person, "Id", "FullName", incident.PersonId1);
+            ViewData["PurchaseOrderId"] = new SelectList(_context.PurchaseOrder, "Id", "PONumber", incident.PurchaseOrderId);
             ViewData["SiteId"] = new SelectList(_context.Site, "Id", "NoSite", incident.SiteId);
             return View(incident);
         }
@@ -142,7 +204,7 @@ namespace Incidents.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IncidentPriorityId,IncidentStatusId,IncidentTypeId,IncidentNumber,Created,PersonId,SiteId,Received,PersonId1,FEScheduled,PersonId2,Description,FEEntersSite,FEEExitsSite,Logg,IssueResolved,Resolution")] Incident incident)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IncidentPriorityId,IncidentStatusId,IncidentTypeId,IncidentNumber,Created,PersonId,PurchaseOrderId,SiteId,Received,PersonId1,FEScheduled,PersonId2,Description,FEEntersSite,FEEExitsSite,Logg,IssueResolved,Resolution")] Incident incident)
         {
             if (id != incident.Id)
             {
@@ -175,6 +237,7 @@ namespace Incidents.Controllers
             ViewData["IncidentStatusId"] = new SelectList(_context.IncidentStatus, "Id", "IncidentStatusName", incident.IncidentStatusId);
             ViewData["IncidentTypeId"] = new SelectList(_context.IncidentType, "Id", "IncidentTypeName", incident.IncidentTypeId);
             ViewData["PersonId1"] = new SelectList(_context.Person, "Id", "FullName", incident.PersonId1);
+            ViewData["PurchaseOrderId"] = new SelectList(_context.PurchaseOrder, "Id", "PONumber", incident.PurchaseOrderId);
             ViewData["SiteId"] = new SelectList(_context.Site, "Id", "NoSite", incident.SiteId);
             return View(incident);
         }
@@ -194,6 +257,7 @@ namespace Incidents.Controllers
                 .Include(i => i.IncidentStatus)
                 .Include(i => i.IncidentType)
                 .Include(i => i.Receiver)
+                .Include(i => i.PurchaseOrder)
                 .Include(i => i.Site)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (incident == null)
