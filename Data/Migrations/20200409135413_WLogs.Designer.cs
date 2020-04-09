@@ -4,14 +4,16 @@ using Incidents.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Incidents.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200409135413_WLogs")]
+    partial class WLogs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,49 +146,6 @@ namespace Incidents.Data.Migrations
                     b.HasIndex("SiteId");
 
                     b.ToTable("Incident");
-                });
-
-            modelBuilder.Entity("Incidents.Models.DataModels.NABLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateTimeEnded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateTimeStarted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Hours")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LogNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("MtrCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PriceHour")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("WLogId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IncidentId");
-
-                    b.HasIndex("WLogId");
-
-                    b.ToTable("NABLog");
                 });
 
             modelBuilder.Entity("Incidents.Models.DataModels.Person", b =>
@@ -805,17 +764,6 @@ namespace Incidents.Data.Migrations
                     b.HasOne("Incidents.Models.DataModels.Site", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId");
-                });
-
-            modelBuilder.Entity("Incidents.Models.DataModels.NABLog", b =>
-                {
-                    b.HasOne("Incidents.Models.DataModels.Incident", "Incident")
-                        .WithMany()
-                        .HasForeignKey("IncidentId");
-
-                    b.HasOne("Incidents.Models.DataModels.WLog", "WLog")
-                        .WithMany()
-                        .HasForeignKey("WLogId");
                 });
 
             modelBuilder.Entity("Incidents.Models.DataModels.Person", b =>

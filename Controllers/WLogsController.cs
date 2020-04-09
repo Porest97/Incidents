@@ -7,36 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Incidents.Data;
 using Incidents.Models.DataModels;
-using Incidents.Models.ViewModels;
 
 namespace Incidents.Controllers
 {
-    public class PurchaseOrdersController : Controller
+    public class WLogsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PurchaseOrdersController(ApplicationDbContext context)
+        public WLogsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: PurchaseOrders
+        // GET: WLogs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PurchaseOrder.ToListAsync());
+            return View(await _context.WLog.ToListAsync());
         }
 
-        public IActionResult ListPOs()
-        {
-            var pOsiewModel = new POsViewModel()
-            {
-                PurchaseOrders = _context.PurchaseOrder               
-                .ToList()
-            };
-            return View(pOsiewModel);
-        }
-
-        // GET: PurchaseOrders/Details/5
+        // GET: WLogs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,39 +33,39 @@ namespace Incidents.Controllers
                 return NotFound();
             }
 
-            var purchaseOrder = await _context.PurchaseOrder
+            var wLog = await _context.WLog
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (purchaseOrder == null)
+            if (wLog == null)
             {
                 return NotFound();
             }
 
-            return View(purchaseOrder);
+            return View(wLog);
         }
 
-        // GET: PurchaseOrders/Create
+        // GET: WLogs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: PurchaseOrders/Create
+        // POST: WLogs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PONumber,Description,POHours,DateTimeApproved")] PurchaseOrder purchaseOrder)
+        public async Task<IActionResult> Create([Bind("Id,WLNumber,Hours,DateTimeFrom,DateTimeTo,Subject")] WLog wLog)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(purchaseOrder);
+                _context.Add(wLog);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(ListPOs));
+                return RedirectToAction(nameof(Index));
             }
-            return View(purchaseOrder);
+            return View(wLog);
         }
 
-        // GET: PurchaseOrders/Edit/5
+        // GET: WLogs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,22 +73,22 @@ namespace Incidents.Controllers
                 return NotFound();
             }
 
-            var purchaseOrder = await _context.PurchaseOrder.FindAsync(id);
-            if (purchaseOrder == null)
+            var wLog = await _context.WLog.FindAsync(id);
+            if (wLog == null)
             {
                 return NotFound();
             }
-            return View(purchaseOrder);
+            return View(wLog);
         }
 
-        // POST: PurchaseOrders/Edit/5
+        // POST: WLogs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PONumber,Description,POHours,DateTimeApproved")] PurchaseOrder purchaseOrder)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,WLNumber,Hours,DateTimeFrom,DateTimeTo,Subject")] WLog wLog)
         {
-            if (id != purchaseOrder.Id)
+            if (id != wLog.Id)
             {
                 return NotFound();
             }
@@ -108,12 +97,12 @@ namespace Incidents.Controllers
             {
                 try
                 {
-                    _context.Update(purchaseOrder);
+                    _context.Update(wLog);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PurchaseOrderExists(purchaseOrder.Id))
+                    if (!WLogExists(wLog.Id))
                     {
                         return NotFound();
                     }
@@ -122,12 +111,12 @@ namespace Incidents.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(ListPOs));
+                return RedirectToAction(nameof(Index));
             }
-            return View(purchaseOrder);
+            return View(wLog);
         }
 
-        // GET: PurchaseOrders/Delete/5
+        // GET: WLogs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,30 +124,30 @@ namespace Incidents.Controllers
                 return NotFound();
             }
 
-            var purchaseOrder = await _context.PurchaseOrder
+            var wLog = await _context.WLog
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (purchaseOrder == null)
+            if (wLog == null)
             {
                 return NotFound();
             }
 
-            return View(purchaseOrder);
+            return View(wLog);
         }
 
-        // POST: PurchaseOrders/Delete/5
+        // POST: WLogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var purchaseOrder = await _context.PurchaseOrder.FindAsync(id);
-            _context.PurchaseOrder.Remove(purchaseOrder);
+            var wLog = await _context.WLog.FindAsync(id);
+            _context.WLog.Remove(wLog);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ListPOs));
+            return RedirectToAction(nameof(Index));
         }
 
-        private bool PurchaseOrderExists(int id)
+        private bool WLogExists(int id)
         {
-            return _context.PurchaseOrder.Any(e => e.Id == id);
+            return _context.WLog.Any(e => e.Id == id);
         }
     }
 }

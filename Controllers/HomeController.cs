@@ -48,7 +48,22 @@ namespace Incidents.Controllers
             return View();
         }
 
+        public IActionResult WorkLogs()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Links()
+        {
+            return View();
+        }
+
+        public IActionResult Netello()
         {
             return View();
         }

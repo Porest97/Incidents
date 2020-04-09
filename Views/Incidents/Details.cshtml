@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Incident</h4>
+    <h4>Incident <a>@Html.DisplayFor(model => model.IncidentNumber)</a></h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -99,6 +99,18 @@
         </dt>
         <dd class="col-sm-10 jumbotron-fluid">
             @Html.DisplayFor(model => model.Logg)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PurchaseOrder)
+        </dt>
+        <dd class="col-sm-10 jumbotron-fluid">
+            @Html.DisplayFor(model => model.PurchaseOrder.PONumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PurchaseOrder.POHours)
+        </dt>
+        <dd class="col-sm-10 jumbotron-fluid">
+            @Html.DisplayFor(model => model.PurchaseOrder.POHours)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IssueResolved)

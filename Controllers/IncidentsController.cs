@@ -86,7 +86,7 @@ namespace Incidents.Controllers
                 .Include(i => i.IncidentType)
                 .Include(i => i.Receiver)
                 .Include(i => i.PurchaseOrder)
-                .Include(i => i.Site).Where(i => i.IncidentPriorityId == 2).Where(i => i.IncidentStatusId < 2)
+                .Include(i => i.Site).Where(i => i.IncidentPriorityId == 2).Where(i => i.IncidentStatusId < 3)
                 .ToList()
             };
             return View(incidentsViewModel);
@@ -105,7 +105,7 @@ namespace Incidents.Controllers
                 .Include(i => i.IncidentType)
                 .Include(i => i.Receiver)
                 .Include(i => i.PurchaseOrder)
-                .Include(i => i.Site).Where(i => i.IncidentPriorityId == 3).Where(i => i.IncidentStatusId < 2)
+                .Include(i => i.Site).Where(i => i.IncidentPriorityId == 3).Where(i => i.IncidentStatusId < 3)
                 .ToList()
             };
             return View(incidentsViewModel);
